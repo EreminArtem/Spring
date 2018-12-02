@@ -11,7 +11,7 @@ import ru.eremin.spring.guns.annotations.UnproducableMagazine;
 public class MagazineBeanFactoryPostProcessor implements BeanFactoryPostProcessor {
     @Override
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
-        String[] names = beanFactory.getBeanDefinitionNames();
+        final String[] names = beanFactory.getBeanDefinitionNames();
         for (final String name : names) {
             final BeanDefinition beanDefinition = beanFactory.getBeanDefinition(name);
             final String className = beanDefinition.getBeanClassName();
