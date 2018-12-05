@@ -2,7 +2,9 @@ package ru.eremin.spring.guns;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import ru.eremin.spring.guns.annotations.UnproducableMagazine;
 
+@UnproducableMagazine(usingMagazine = LargeRifleMagazine.class)
 @Component("rifle_magazine")
 public class RifleMagazine implements Magazine {
 
