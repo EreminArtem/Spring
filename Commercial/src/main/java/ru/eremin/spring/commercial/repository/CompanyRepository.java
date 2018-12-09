@@ -1,40 +1,20 @@
 package ru.eremin.spring.commercial.repository;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import ru.eremin.spring.commercial.entity.Company;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
 
-@Repository
-@Transactional
-public class CompanyRepository {
+@Repository(CompanyRepository.NAME)
+public interface CompanyRepository extends JpaRepository<Company, String> {
 
-    @PersistenceContext
-    private EntityManager entityManager;
+    public static final String NAME = "companyRepository";
 
-    public List<Company> findAll() {
-        return entityManager.createQuery("SELECT e FROM Company e", Company.class).getResultList();
-    }
+    Company findCompaniesById(String id);
 
-    public void insert(final Company company) {
-        if (company != null) entityManager.persist(company);
-    }
+    List<Company> findAll();
 
-    public Company findById(final String id) {
-        if (id == null || id.isEmpty()) return null;
-        return entityManager.find(Company.class, id);
-    }
+    Company findCompaniesByName(String name);
 
-    public void update(final Company company) {
-        if (company == null) entityManager.merge(company);
-    }
-
-    public void delete(final String id) {
-        if (id == null || id.isEmpty()) return;
-        final Company company = entityManager.find(Company.class, id);
-        if (company != null) entityManager.remove(company);
-    }
 }

@@ -1,40 +1,21 @@
 package ru.eremin.spring.commercial.repository;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import ru.eremin.spring.commercial.entity.Category;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
 
-@Repository
-@Transactional
-public class CategoryRepository {
 
-    @PersistenceContext
-    private EntityManager entityManager;
+@Repository(CategoryRepository.NAME)
+public interface CategoryRepository extends JpaRepository<Category, String> {
 
-    public List<Category> findAll() {
-        return entityManager.createQuery("SELECT e FROM Category e", Category.class).getResultList();
-    }
+    String NAME = "categoryRepository";
 
-    public void insert(final Category category) {
-        if (category != null) entityManager.persist(category);
-    }
+    Category findCategoryById(String id);
 
-    public Category findById(final String id) {
-        if (id == null || id.isEmpty()) return null;
-        return entityManager.find(Category.class, id);
-    }
+    List<Category> findAll();
 
-    public void update(final Category category) {
-        if (category != null) entityManager.merge(category);
-    }
+    Category findCategoryByName(String name);
 
-    public void delete(final String id) {
-        if (id == null || id.isEmpty()) return;
-        final Category category = entityManager.find(Category.class, id);
-        if (category != null) entityManager.remove(category);
-    }
 }
