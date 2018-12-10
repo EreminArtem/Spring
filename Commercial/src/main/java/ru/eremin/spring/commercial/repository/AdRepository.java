@@ -1,41 +1,29 @@
 package ru.eremin.spring.commercial.repository;
 
-
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import ru.eremin.spring.commercial.entity.Ad;
+import ru.eremin.spring.commercial.entity.Category;
+import ru.eremin.spring.commercial.entity.Company;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
 
-@Repository
-@Transactional
-public class AdRepository {
+@Repository(AdRepository.NAME)
+public interface AdRepository extends JpaRepository<Ad, String> {
 
-    @PersistenceContext
-    private EntityManager entityManager;
+    String NAME = "adRepository";
 
-    public List<Ad> findAll() {
-        return entityManager.createQuery("SELECT e FROM Ad e", Ad.class).getResultList();
-    }
+    Ad findAdById(String id);
 
-    public void insert(final Ad ad) {
-        if (ad != null) entityManager.persist(ad);
-    }
+    List<Ad> findAll();
 
-    public Ad findById(final String id) {
-        if (id == null || id.isEmpty()) return null;
-        return entityManager.find(Ad.class, id);
-    }
+    Ad findAdByName(String name);
 
-    public void update(final Ad ad) {
-        if (ad != null) entityManager.merge(ad);
-    }
+    List<Ad> findAdsByCategory(Category category);
 
-    public void delete(final String id) {
-        if (id == null || id.isEmpty()) return;
-        final Ad ad = entityManager.find(Ad.class, id);
-        if (ad != null) entityManager.remove(ad);
-    }
+    @Query(value = "SELECT e.company FROM Ad e WHERE e.id = :id")
+    Company getCompany(@Param("id") String id);
+
 }

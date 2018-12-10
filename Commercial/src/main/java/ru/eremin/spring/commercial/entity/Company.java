@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -28,4 +29,21 @@ public class Company {
 
     @Column(name = "company_address")
     private String address;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Company company = (Company) o;
+        return Objects.equals(id, company.id) &&
+                Objects.equals(name, company.name) &&
+                Objects.equals(description, company.description) &&
+                Objects.equals(address, company.address);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id, name, description, address);
+    }
 }
