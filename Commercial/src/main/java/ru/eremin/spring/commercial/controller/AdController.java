@@ -7,11 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class AdController {
     @RequestMapping("/ad")
-    public String ad(final Model model){
-
+    public String ad(final Model model) {
         return "hello";
     }
-
 
 
 }

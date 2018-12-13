@@ -10,7 +10,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
 @EnableWebMvc
-@ComponentScan("ru.eremin.spring.commercial")
+@ComponentScan(basePackages = "ru.eremin.spring.commercial")
 public class WebMvcConfig implements WebMvcConfigurer {
 
     @Bean
@@ -29,3 +29,4 @@ public class WebMvcConfig implements WebMvcConfigurer {
         return source;
     }
 }
+
